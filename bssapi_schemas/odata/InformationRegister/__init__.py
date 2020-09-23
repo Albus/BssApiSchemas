@@ -1,14 +1,13 @@
-import typing
-import pydantic
-from bssapi_schemas.odata import InformationRegister
+from bssapi_schemas.odata import InformationRegister, PacketsOfTabDataMixin, PacketsOfTabDataSourcesMixin
+from exch import FormatPacket, Packet
 
 
-class PacketsOfTabDataSources(InformationRegister):
-    Hash: pydantic.StrictStr = pydantic.Field(exclusiveRegex="^[0-9a-FA-F]{40}$")
-    Format: pydantic.StrictStr = pydantic.Field(exclusiveRegex="^[0-9a-FA-F]{40}$")
-    Packet: typing.Union[pydantic.StrictStr]
+class PacketsOfTabDataSources(InformationRegister, PacketsOfTabDataSourcesMixin):
+    def __init__(self, format: FormatPacket):
+        pass
 
 
-class PacketsOfTabData(PacketsOfTabDataSources):
-    Source: pydantic.StrictStr = pydantic.Field(exclusiveRegex="^[0-9a-FA-F]{40}$")
-    FileName: pydantic.StrictStr
+class PacketsOfTabData(InformationRegister, PacketsOfTabDataSourcesMixin, PacketsOfTabDataMixin):
+    def __init__(self, packet: Packet):
+        super(PacketsOfTabData, self).__init__(Hash=packet.File.hash, Format=packet.format, Packet=packet,
+                                               FileName=packet.file.name, Source=packet.source)
