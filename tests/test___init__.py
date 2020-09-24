@@ -39,9 +39,10 @@ class TestPacketsOfTabDataSources(TestCase):
         hash=exch.Hash(format=TestPacketsOfTabData.Packet.format, source=TestPacketsOfTabData.Packet.source))
 
     def test_PacketsOfTabDataSourcesMixin(self):
-        assert isinstance(odata.PacketsOfTabDataSourcesMixin(
-            Hash=self.FormatPacket.hash.source, Format=self.FormatPacket.hash.format, Packet=self.FormatPacket),
-            odata.PacketsOfTabDataSourcesMixin)
+        data = odata.PacketsOfTabDataSourcesMixin(
+            Hash=self.FormatPacket.hash.source, Format=self.FormatPacket.hash.format, Packet=self.FormatPacket).dict()
+        pass
 
     def test_PacketsOfTabDataSources(self):
-        assert isinstance(reg.PacketsOfTabDataSources(format=self.FormatPacket), reg.PacketsOfTabDataSources)
+        data = reg.PacketsOfTabDataSources(format=self.FormatPacket).dict()
+        pass

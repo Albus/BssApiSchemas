@@ -1,9 +1,7 @@
-import typing
+from pydantic import Field, BaseModel, StrictStr, AnyHttpUrl
+import bssapi_schemas.exch as exch
 
-import pydantic
-import exch
-
-class oDataUrl(pydantic.AnyHttpUrl):
+class oDataUrl(AnyHttpUrl):
     user_required: bool = True
 
     @property
@@ -11,29 +9,35 @@ class oDataUrl(pydantic.AnyHttpUrl):
         return self.scheme.endswith('s')
 
 
-class InformationRegister(pydantic.BaseModel):
+class InformationRegister(BaseModel):
 
     @staticmethod
-    def _get_url(base_url: pydantic.StrictStr) -> oDataUrl:
-        class __get_url(pydantic.BaseModel):
+    def _get_url(base_url: StrictStr) -> oDataUrl:
+        class __get_url(BaseModel):
             address: oDataUrl
 
         return __get_url(address=base_url).address
 
     @classmethod
-    def path(cls, base_url: pydantic.AnyHttpUrl) -> pydantic.AnyHttpUrl:
+    def path(cls, base_url: AnyHttpUrl) -> AnyHttpUrl:
         base_url += "/odata/standard.odata/InformationRegister_{InformationRegister}?$format=json" \
             .format(InformationRegister=cls.__name__)
-        return cls._get_url(base_url=pydantic.StrictStr(base_url))
+        return cls._get_url(base_url=StrictStr(base_url))
 
 
-class PacketsOfTabDataSourcesMixin(pydantic.BaseModel):
-    Hash: pydantic.StrictStr = pydantic.Field(exclusiveRegex="^[0-9a-FA-F]{40}$")
-    Format: pydantic.StrictStr = pydantic.Field(exclusiveRegex="^[0-9a-FA-F]{40}$")
+class PacketsOfTabDataSourcesMixin(BaseModel):
+    """
+    Примесь описания источника данных
+    """
+    Hash: StrictStr
+    Format: StrictStr
     Packet: exch.FormatPacket
 
 
-class PacketsOfTabDataMixin(pydantic.BaseModel):
-    FileName: pydantic.StrictStr
-    Source: pydantic.StrictStr = pydantic.Field(exclusiveRegex="^[0-9a-FA-F]{40}$")
+class PacketsOfTabDataMixin(BaseModel):
+    """
+    Примесь описания пакета данных
+    """
+    FileName: StrictStr
+    Source: StrictStr
     Packet: exch.Packet
