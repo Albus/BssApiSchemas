@@ -1,5 +1,9 @@
-from pydantic import Field, BaseModel, StrictStr, AnyHttpUrl
-import bssapi_schemas.exch as exch
+from typing import Union
+
+from pydantic import BaseModel, StrictStr, AnyHttpUrl
+
+from bssapi_schemas import exch
+
 
 class oDataUrl(AnyHttpUrl):
     user_required: bool = True
@@ -12,7 +16,7 @@ class oDataUrl(AnyHttpUrl):
 class InformationRegister(BaseModel):
 
     @staticmethod
-    def _get_url(base_url: StrictStr) -> oDataUrl:
+    def _get_url(base_url: Union[StrictStr, AnyHttpUrl]) -> oDataUrl:
         class __get_url(BaseModel):
             address: oDataUrl
 

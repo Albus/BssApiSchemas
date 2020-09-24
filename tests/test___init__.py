@@ -1,9 +1,9 @@
 from datetime import date
 from unittest import TestCase
 
-import exch
-import odata
-import odata.InformationRegister as reg
+import bssapi_schemas.odata.InformationRegister as Reg
+from bssapi_schemas import exch
+from bssapi_schemas import odata
 
 
 class TestPacketsOfTabData(TestCase):
@@ -16,18 +16,13 @@ class TestPacketsOfTabData(TestCase):
 
     def test_PacketsOfTabDataMixin(self):
         assert isinstance(odata.PacketsOfTabDataMixin(
-            FileName=self.Packet.file.name, Source=self.Packet.source), odata.PacketsOfTabDataMixin)
-
-    def test_PacketsOfTabDataMixin(self):
-        assert isinstance(odata.PacketsOfTabDataMixin(
             FileName=self.Packet.file.name,
             Source=self.Packet.source,
             Packet=self.Packet), odata.PacketsOfTabDataMixin)
 
-    def Test_PacketsOfTabData(self):
-        assert isinstance(reg.PacketsOfTabData(
-            packet=self.Packet
-        ), reg.PacketsOfTabData)
+    def test_PacketsOfTabData(self):
+        data = Reg.PacketsOfTabData(packet=self.Packet)
+        assert isinstance(data, Reg.PacketsOfTabData)
 
 
 class TestPacketsOfTabDataSources(TestCase):
@@ -44,5 +39,5 @@ class TestPacketsOfTabDataSources(TestCase):
         pass
 
     def test_PacketsOfTabDataSources(self):
-        data = reg.PacketsOfTabDataSources(format=self.FormatPacket).dict()
-        pass
+        data = Reg.PacketsOfTabDataSources(format=self.FormatPacket)
+        assert isinstance(data, Reg.PacketsOfTabDataSources)

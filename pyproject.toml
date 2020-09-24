@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bssapi-schemas"
-version = "0.1.3"
+version = "0.1.4"
 description = "Схемы BSS"
 authors = ["Anton Rastyazhenko <rastyazhenko.anton@gmail.com>"]
 
