@@ -4,6 +4,7 @@ from unittest import TestCase
 import bssapi_schemas.odata.InformationRegister as reg
 from bssapi_schemas import exch
 from bssapi_schemas.odata import mixin
+from bssapi_schemas.odata.error import Model as ErrorMessage
 
 
 class TestPacketsOfTabData(TestCase):
@@ -23,7 +24,7 @@ class TestPacketsOfTabData(TestCase):
 
     def test_reg_PacketsOfTabData(self):
         data = reg.PacketsOfTabData(packet=self.Packet)
-
+        pass
 
 
 class TestPacketsOfTabDataSources(TestCase):
@@ -39,7 +40,10 @@ class TestPacketsOfTabDataSources(TestCase):
             Hash=self.FormatPacket.hash.source, Format=self.FormatPacket.hash.format,
             Packet=self.FormatPacket)
 
-
     def test_reg_PacketsOfTabDataSources(self):
         data = reg.PacketsOfTabDataSources(format=self.FormatPacket)
 
+
+class test_odata_error(TestCase):
+    def test_parse_from_raw(self):
+        ErrorMessage.parse_raw('{"odata.error":{"code":"-1","message":{"lang":"ru","value":"test message"}}}')

@@ -1,8 +1,6 @@
 from typing import Union
 
-from pydantic import BaseModel, StrictStr, AnyHttpUrl
-
-from bssapi_schemas import exch
+from pydantic import BaseModel, StrictStr, AnyHttpUrl, Field
 
 
 class oDataUrl(AnyHttpUrl):
@@ -27,3 +25,6 @@ class InformationRegister(BaseModel):
         base_url += "/odata/standard.odata/InformationRegister_{InformationRegister}?$format=json" \
             .format(InformationRegister=cls.__name__)
         return cls._get_url(base_url=StrictStr(base_url))
+
+
+
