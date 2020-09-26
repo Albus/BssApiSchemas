@@ -3,7 +3,7 @@ from unittest import TestCase
 
 import bssapi_schemas.odata.InformationRegister as Reg
 from bssapi_schemas import exch
-from bssapi_schemas import odata
+from bssapi_schemas.odata import mixin
 
 
 class TestPacketsOfTabData(TestCase):
@@ -15,10 +15,10 @@ class TestPacketsOfTabData(TestCase):
             url=exch.Source(user='ivav', host='santens.ru', port=21, path='/path/to/folder'), hex='0102030405'))
 
     def test_PacketsOfTabDataMixin(self):
-        assert isinstance(odata.PacketsOfTabDataMixin(
+        assert isinstance(mixin.PacketsOfTabData(
             FileName=self.Packet.file.name,
             Source=self.Packet.source,
-            Packet=self.Packet), odata.PacketsOfTabDataMixin)
+            Packet=self.Packet), mixin.PacketsOfTabData)
 
     def test_PacketsOfTabData(self):
         data = Reg.PacketsOfTabData(packet=self.Packet)
@@ -34,7 +34,7 @@ class TestPacketsOfTabDataSources(TestCase):
         hash=exch.Hash(format=TestPacketsOfTabData.Packet.format, source=TestPacketsOfTabData.Packet.source))
 
     def test_PacketsOfTabDataSourcesMixin(self):
-        data = odata.PacketsOfTabDataSourcesMixin(
+        data = mixin.PacketsOfTabDataSources(
             Hash=self.FormatPacket.hash.source, Format=self.FormatPacket.hash.format, Packet=self.FormatPacket).dict()
         pass
 

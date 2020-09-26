@@ -27,21 +27,3 @@ class InformationRegister(BaseModel):
         base_url += "/odata/standard.odata/InformationRegister_{InformationRegister}?$format=json" \
             .format(InformationRegister=cls.__name__)
         return cls._get_url(base_url=StrictStr(base_url))
-
-
-class PacketsOfTabDataSourcesMixin(BaseModel):
-    """
-    Примесь описания источника данных
-    """
-    Hash: StrictStr
-    Format: StrictStr
-    Packet: exch.FormatPacket
-
-
-class PacketsOfTabDataMixin(BaseModel):
-    """
-    Примесь описания пакета данных
-    """
-    FileName: StrictStr
-    Source: StrictStr
-    Packet: exch.Packet

@@ -1,8 +1,8 @@
-from bssapi_schemas import exch
-from bssapi_schemas import odata
+from bssapi_schemas import exch, odata
+from bssapi_schemas.odata import mixin
 
 
-class PacketsOfTabDataSources(odata.InformationRegister, odata.PacketsOfTabDataSourcesMixin):
+class PacketsOfTabDataSources(odata.InformationRegister, mixin.PacketsOfTabDataSources):
     """
     Запись регистра "Пакеты источников импортируемых табличных данных"
     """
@@ -12,7 +12,7 @@ class PacketsOfTabDataSources(odata.InformationRegister, odata.PacketsOfTabDataS
             Hash=format.hash.source, Format=format.hash.format, Packet=format)
 
 
-class PacketsOfTabData(odata.InformationRegister, odata.PacketsOfTabDataMixin, odata.PacketsOfTabDataSourcesMixin):
+class PacketsOfTabData(odata.InformationRegister, mixin.PacketsOfTabData, mixin.PacketsOfTabDataSources):
     """
     Запись регистра "Пакеты импортируемых табличных данных"
     """
